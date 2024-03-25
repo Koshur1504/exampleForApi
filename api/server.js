@@ -37,8 +37,11 @@ const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 
 server.db = router.db;
-
-// Set up the authentication middleware
+server.use(jsonServer.rewriter({
+    '/api/*': '/$1',
+    '/blog/:resource/:id/show': '/:resource/:id'
+}))
+Set up the authentication middleware
 server.use(cors());
 server.use(auth);
 server.use(middlewares);
